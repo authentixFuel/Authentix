@@ -47,6 +47,11 @@ async function generateCaptcha() {
     console.log(input_val);
     if (input_val == captcha_val){
         console.log("true");
+        document.getElementById("cap_area").innerHTML = `<br/><br/>
+        <div style="color: navy; font-size: 2em;">Congratulations. Your captcha based authentication is 
+        successfully completed. Captcha authentication is one of the steps Authentix App requires
+        to generate your successful Proof of Humanity (PoH) authorization.</div>
+        <br/><br/>`;
         return 1;
     }
     else {

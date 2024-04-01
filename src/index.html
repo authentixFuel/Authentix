@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
+    <title>Authentix Fuel Demo</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -54,30 +54,32 @@
       <img class="homeImg" src="./img/home.png" alt="" />
       <br />
      
-      <div class="homeText3">Authentix</div> 
-      <div class="homeText">A dapp by Authentix Labs</div>
+      <div class="homeText3">Authentix App Preview</div> 
+      <div class="homeText">A dapp by Authentix.Fuel</div>
       <br/><br/>
-
-      <div style="font-size: 2em;color: red;left: 40%;">Fill in the Order: White -> Blue -> Red</div>
-      <div style="font-size: 2em;color: red;left: 40%;">Ignore All Other Colors</div>
-      <div class="row">
-        <div class="col-lg-2 mx-auto">
-          
-          <a class="walletBtn" style="font-size: 1.3em;" onclick="generateCaptcha();">Generate Captcha</a>
-          
-          <br/>
-          
-          <br/> <br/> 
-          <canvas id="captcha" width="200" height="100"></canvas>
-          <form id="cap_form">
+      <div id="cap_area">
+        <div style="font-size: 2em;color: red;left: 40%;">Fill in the Order: White -> Blue -> Red</div>
+        <div style="font-size: 2em;color: red;left: 40%;">Ignore All Other Colors</div>
+        <div class="row">
+          <div class="col-lg-2 mx-auto" >
             
-            <input type="text" placeholder="Captcha" id="captchaTextBox"/><br/><br/>
-            <button type="button" onclick="validateCaptcha()">Submit</button>
-          </form>
-        </div>
+            <a class="walletBtn" style="font-size: 1.3em;" onclick="generateCaptcha();">Generate Captcha</a>
+            
+            <br/>
+            
+            <br/> <br/> 
+            <canvas id="captcha" width="200" height="100"></canvas>
+            <form id="cap_form">
+              
+              <input type="text" placeholder="Captcha" id="captchaTextBox" height="120"/><br/><br/>
+              <button type="button" onclick="validateCaptcha()">Submit</button>
+            </form>
+          </div>
+      </div>
       </div>
       <br/><br/>
-      <div class="homeText2">More Details COMING SOON</div>
+      <div class="homeText2" style="margin-bottom: 1px;">Social zkLink COMING SOON</div>
+      <div class="homeText2" style="font-size: 1.1em;">More Details COMING SOON</div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
