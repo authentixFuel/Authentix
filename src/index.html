@@ -57,13 +57,15 @@
       <div class="homeText3">Authentix App Preview</div> 
       <div class="homeText">A dapp by Authentix.Fuel</div>
       <br/><br/>
+
       <div id="cap_area">
         <div style="font-size: 2em;color: red;left: 40%;">Fill in the Order: White -> Blue -> Red</div>
         <div style="font-size: 2em;color: red;left: 40%;">Ignore All Other Colors</div>
         <div class="row">
+          
           <div class="col-lg-2 mx-auto" >
             
-            <a class="walletBtn" style="font-size: 1.3em;" onclick="generateCaptcha();">Generate Captcha</a>
+            <a class="walletBtn2" style="text-decoration: none;" onclick="generateCaptcha();">Generate Captcha</a>
             
             <br/>
             
@@ -71,8 +73,8 @@
             <canvas id="captcha" width="200" height="100"></canvas>
             <form id="cap_form">
               
-              <input type="text" placeholder="Captcha" id="captchaTextBox" height="120"/><br/><br/>
-              <button type="button" onclick="validateCaptcha()">Submit</button>
+              <input type="text" placeholder="Captcha" id="captchaTextBox" height="120"/>
+              <button type="button" style="margin-top: 7px;" onclick="validateCaptcha()">Submit</button>
             </form>
           </div>
       </div>

@@ -1,5 +1,5 @@
 :root {
-    --primaryColor: #181bdf;
+    --primaryColor: #2bf37e;
     --secondaryColor: #f6ecec;
   }
   html {
@@ -100,6 +100,27 @@
   .headerSearchArea button:hover {
     color: var(--primaryColor);
   }
+  .walletBtn2 {
+    display: inline-block;
+    width: 120%;
+    cursor: pointer;
+    color: #000;
+    background-color: #2bf37e;
+    padding: 0.3em 1.3em;
+    border-radius: 0.6em;
+    font-size: 1.4em;
+    font-weight: 500;
+    border: 1px solid #2bf37e;
+    transition: 250ms all ease-in-out;
+    margin-top: 20px;
+    
+    
+  }
+  .walletBtn2:hover {
+    background-color: transparent;
+    color: #2bf37e;
+    border: 1px solid #2bf37e;
+  }
   .pageHeader .walletBtn {
     display: inline-block;
     text-decoration: none;
@@ -119,6 +140,7 @@
   }
   .pageHeader .walletBtn:hover {
     background-color: transparent;
+    cursor: pointer;
     border: 1px solid var(--primaryColor);
   }
   .pageHeader .languageBtn {
@@ -448,7 +470,7 @@
     transform: scale(1.05);
   }
   .killerCard:hover .cardFooter {
-    background-color: #181bdf;
+    background-color: #2bf37e;
   }
   .killerCard .cardFooter {
     background-color: #000000;
@@ -1559,20 +1581,20 @@
     padding: 6em 3em;
   }
   .homeWrapper .homeText {
-    color: #181bdf;
+    color: #2bf37e;
     font-family: "Poppins";
     font-weight: 600;
     margin-bottom: 1em;
   }
   .homeWrapper .homeText2 {
-    color: #181bdf;
+    color: #2bf37e;
     font-family: "Poppins";
     font-size:300%;
     font-weight: 400;
     margin-bottom: 1em;
   }
   .homeWrapper .homeText3 {
-    color: #181bdf;
+    color: #2bf37e;
     font-family: "Poppins";
     font-size:400%;
     font-weight: 600;
