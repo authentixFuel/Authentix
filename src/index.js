@@ -66,3 +66,9 @@ async function generateCaptcha() {
     localStorage.setItem("cap_key", "");
   }
   window.resetCaptcha = resetCaptcha;
+
+
+  async function validateByMouse(){
+    console.log("true");
+  }
+  window.validateByMouse = validateByMouse;
