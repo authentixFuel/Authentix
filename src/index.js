@@ -1,4 +1,5 @@
 import { createCaptcha } from "freecaptcha";
+import axios from "axios";
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
 
 async function connect_fuel(code) {
@@ -69,6 +70,16 @@ async function generateCaptcha() {
 
 
   async function validateByMouse(){
-    console.log("true");
+
+    try{
+      const response = await axios.post("https://worrisome-lion-sneakers.cyclic.app/api/authentix/mouse", {
+        data: null,
+    });
+    console.log(response.data.mouseHuman);
+  }
+    
+    catch (err){
+      console.log(err);
+    }
   }
   window.validateByMouse = validateByMouse;
