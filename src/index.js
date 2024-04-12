@@ -76,10 +76,22 @@ async function generateCaptcha() {
         data: null,
     });
     console.log(response.data.mouseHuman);
+    if (response.data.mouseHuman){
+      document.getElementById("mouse_area").innerHTML = `<br/><br/>
+        <div style="color: navy; font-size: 2em;">Congratulations. Your mouse movement based authentication is 
+        successfully completed. Captcha authentication is one of the steps Authentix App requires
+        to generate your successful Proof of Humanity (PoH) authorization.</div>
+        <br/><br/>`;
+      return 1;
+    }
+    else {
+      return 0;
+    }
   }
     
     catch (err){
       console.log(err);
+      return 0;
     }
   }
   window.validateByMouse = validateByMouse;
