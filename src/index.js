@@ -1,5 +1,6 @@
 import { createCaptcha } from "freecaptcha";
 import axios from "axios";
+import converter from "bech32-converting"
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
 
 async function connect_fuel(code) {
@@ -25,6 +26,34 @@ async function connect_fuel(code) {
    
 }
 window.connect_fuel = connect_fuel;
+
+async function check_guild(){
+  const gid = '30930';
+  const wallet = '0xcada9c112a91443587adda134644987df5b21028c48afea3cb3b2b137a5b7384';
+
+ const url = 'https://api.guild.xyz/v1/guild/member/'.concat(gid).concat('/').concat(wallet);
+  
+  try{
+    const response = await axios.get(url, {
+      data: null,
+  });
+  
+  var i = 0;
+  var access_count = 0;
+  while (i < response.data.length){
+    if (response.data[i].access){
+      access_count++;
+    }
+    i += 1;
+  }
+
+  console.log(access_count);
+  
+ } catch(err){
+  console.log("user not found");
+ }
+}
+window.check_guild = check_guild;
 
 
 
