@@ -1,6 +1,6 @@
 import { createCaptcha } from "freecaptcha";
 import axios from "axios";
-import converter from "bech32-converting"
+import { Wallet } from 'fuels';
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
 
 async function connect_fuel(code) {
@@ -23,13 +23,18 @@ async function connect_fuel(code) {
     
     const accounts = await fuel.accounts();
     console.log("Accounts", accounts);
+    const wallet = Wallet.fromAddress(accounts[0].toString());
+    const evmWallet = wallet.address.toB256();
+    console.log(evmWallet);
+    localStorage.setItem("bech_wallet", accounts[0].toString());
+    localStorage.setItem("hex_wallet", evmWallet.toString());
    
 }
 window.connect_fuel = connect_fuel;
 
 async function check_guild(){
   const gid = '30930';
-  const wallet = '0xcada9c112a91443587adda134644987df5b21028c48afea3cb3b2b137a5b7384';
+  const wallet = localStorage.getItem('hex_wallet');
 
  const url = 'https://api.guild.xyz/v1/guild/member/'.concat(gid).concat('/').concat(wallet);
   
@@ -94,6 +99,8 @@ async function generateCaptcha() {
 
   async function resetCaptcha(){
     localStorage.setItem("cap_key", "");
+    localStorage.setItem("hex_wallet", "");
+    localStorage.setItem("bech_wallet", "");
   }
   window.resetCaptcha = resetCaptcha;
 
