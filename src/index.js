@@ -36,6 +36,11 @@ async function check_guild(){
   const gid = '30930';
   const wallet = localStorage.getItem('hex_wallet');
 
+  if (wallet == ''){
+    console.log('Please connect a wallet');
+    return;
+  }
+
  const url = 'https://api.guild.xyz/v1/guild/member/'.concat(gid).concat('/').concat(wallet);
   
   try{
