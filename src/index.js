@@ -28,6 +28,8 @@ async function connect_fuel(code) {
     console.log(evmWallet);
     localStorage.setItem("bech_wallet", accounts[0].toString());
     localStorage.setItem("hex_wallet", evmWallet.toString());
+    document.getElementById('warn_txt').textContent='';
+
    
 }
 window.connect_fuel = connect_fuel;
@@ -38,6 +40,7 @@ async function check_guild(){
 
   if (wallet == ''){
     console.log('Please connect a wallet');
+    document.getElementById('warn_txt').textContent='Please connect a wallet';
     return;
   }
 
@@ -58,6 +61,14 @@ async function check_guild(){
   }
 
   console.log(access_count);
+  if (access_count > 0){
+    document.getElementById('guild_txt').textContent = 'Guild Authentication Done';
+    document.getElementById('guild_txt').style.color = 'green';
+  }
+  else {
+    document.getElementById('guild_txt').textContent = 'Guild Authentication Failed';
+    document.getElementById('guild_txt').style.color = 'red';
+  }
   
  } catch(err){
   console.log("user not found");
