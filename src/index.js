@@ -82,16 +82,31 @@ window.check_guild = check_guild;
 
 
 
-async function generateCaptcha() {
+function generateCaptcha() {
     var el = document.getElementById('captcha');
     var captcha_val = createCaptcha(el);
     console.log(captcha_val);
     localStorage.setItem("cap_key", captcha_val);
+    const now = Date.now();
+    localStorage.setItem("last_gen", now.toString());
    }
   window.generateCaptcha = generateCaptcha;
 
 
   async function validateCaptcha() {
+    const now = Date.now();
+    var gen_time = localStorage.getItem('last_gen');
+    if (gen_time == ''){
+      console.log('no captcha generated');
+      return;
+    }
+  
+    const last_gen = Number(gen_time);
+    console.log(now - last_gen);
+    if (now - last_gen > 30000){
+      console.log('timed out captcha');
+      generateCaptcha();
+    }
     var captcha_val = localStorage.getItem("cap_key");
     console.log(captcha_val);
     var input_val = document.getElementById("captchaTextBox").value;
@@ -107,6 +122,7 @@ async function generateCaptcha() {
     }
     else {
         console.log("false");
+        generateCaptcha();
         return 0;
     }
    }
@@ -117,6 +133,7 @@ async function generateCaptcha() {
     localStorage.setItem("cap_key", "");
     localStorage.setItem("hex_wallet", "");
     localStorage.setItem("bech_wallet", "");
+    localStorage.setItem("last_gen", "");
   }
   window.resetCaptcha = resetCaptcha;
 
