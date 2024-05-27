@@ -96,8 +96,10 @@ function generateCaptcha() {
   async function validateCaptcha() {
     const now = Date.now();
     var gen_time = localStorage.getItem('last_gen');
+    
     if (gen_time == ''){
       console.log('no captcha generated');
+      generateCaptcha();
       return;
     }
   
@@ -122,6 +124,7 @@ function generateCaptcha() {
     }
     else {
         console.log("false");
+        document.getElementById("captchaTextBox").value = '';
         generateCaptcha();
         return 0;
     }
