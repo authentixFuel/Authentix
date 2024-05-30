@@ -100,6 +100,7 @@ function generateCaptcha() {
     if (gen_time == ''){
       console.log('no captcha generated');
       generateCaptcha();
+      document.getElementById("captchaTextBox").value = '';
       return;
     }
   
@@ -107,6 +108,7 @@ function generateCaptcha() {
     console.log(now - last_gen);
     if (now - last_gen > 30000){
       console.log('timed out captcha');
+      document.getElementById("captchaTextBox").value = '';
       generateCaptcha();
     }
     var captcha_val = localStorage.getItem("cap_key");
