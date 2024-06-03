@@ -14,7 +14,7 @@
         "bech32-converting": "^1.0.9",
         "buffer": "^6.0.3",
         "crypto-js": "^4.2.0",
-        "freecaptcha": "^1.2.4",
+        "freecaptcha": "^1.3.0",
         "fuels": "^0.79.0",
         "leaflet": "^1.9.3",
         "path-browserify": "^1.0.1",

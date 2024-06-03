@@ -146,7 +146,7 @@ function generateCaptcha() {
   async function validateByMouse(){
 
     try{
-      const response = await axios.post("https://worrisome-lion-sneakers.cyclic.app/api/authentix/mouse", {
+      const response = await axios.post("https://gm-serve3.onrender.com/api/authentix/mouse", {
         data: null,
     });
     console.log(response.data.mouseHuman);
