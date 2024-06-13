@@ -2,6 +2,7 @@ import { createCaptcha } from "freecaptcha";
 import axios from "axios";
 import { Wallet } from 'fuels';
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
+import { createGuildClient, createSigner } from "@guildxyz/sdk";
 
 async function connect_fuel(code) {
     const fuel = new Fuel({
@@ -43,25 +44,21 @@ async function check_guild(){
     document.getElementById('warn_txt').textContent='Please connect a wallet';
     return;
   }
+  const guildClient = createGuildClient("Authentix");
 
- const url = 'https://api.guild.xyz/v1/guild/member/'.concat(gid).concat('/').concat(wallet);
-  
-  try{
-    const response = await axios.get(url, {
-      data: null,
-  });
-  
+  const userGuilds = await guildClient.user
+    .getMemberships(wallet);
+  console.log(userGuilds);
+  var roles = [];
   var i = 0;
-  var access_count = 0;
-  while (i < response.data.length){
-    if (response.data[i].access){
-      access_count++;
+  while (i < userGuilds.length){
+    if (userGuilds[i].guildId == 30930){
+      roles = userGuilds[i].roleIds;
     }
-    i += 1;
+    i++;
   }
-
-  console.log(access_count);
-  if (access_count > 0){
+  console.log(roles);
+  if (roles.length > 0){
     document.getElementById('guild_txt').textContent = 'Guild Authentication Done';
     document.getElementById('guild_txt').style.color = 'green';
   }
@@ -69,10 +66,9 @@ async function check_guild(){
     document.getElementById('guild_txt').textContent = 'Guild Authentication Failed';
     document.getElementById('guild_txt').style.color = 'red';
   }
-  
- } catch(err){
-  console.log("user not found");
- }
+
+
+
 }
 window.check_guild = check_guild;
 
