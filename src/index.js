@@ -50,14 +50,19 @@ async function check_guild(){
     .getMemberships(wallet);
   console.log(userGuilds);
   var roles = [];
+  var joined = '';
   var i = 0;
   while (i < userGuilds.length){
     if (userGuilds[i].guildId == 30930){
       roles = userGuilds[i].roleIds;
+      joined = userGuilds[i].joinedAt;
+      joined = joined.substring(0, 10);
     }
     i++;
   }
   console.log(roles);
+  const joined_ts = new Date(joined).getTime() / 1000;
+  console.log(joined_ts);
   if (roles.length > 0){
     document.getElementById('guild_txt').textContent = 'Guild Authentication Done';
     document.getElementById('guild_txt').style.color = 'green';
