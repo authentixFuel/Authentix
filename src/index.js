@@ -140,6 +140,30 @@ function generateCaptcha() {
     localStorage.setItem("hex_wallet", "");
     localStorage.setItem("bech_wallet", "");
     localStorage.setItem("last_gen", "");
+    var url = window.location.toString();
+    if (url.indexOf('code') != -1){
+      var access_token = url.substring(url.indexOf('code') + 5);
+      console.log(access_token);
+      const url2 = 'https://discord.com/api/v10/oauth2/users/@me';
+      const response = await fetch(url2, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.user.id);
+        //const client = new Client({intents: [GatewayIntentBits.Guilds]});
+        //client.login(TOKEN);
+        //const guild = client.guilds.cache.get(GUILD_ID);
+        //const isMember = await guild.members.fetch(data.user.id).then(() => true).catch(() => false);
+        //console.log(isMember);
+      } else {
+        throw new Error(`Error fetching user data: [${response.status}] ${response.statusText}`);
+      }
+    }
+
+
   }
   window.resetCaptcha = resetCaptcha;
 
@@ -170,3 +194,27 @@ function generateCaptcha() {
     }
   }
   window.validateByMouse = validateByMouse;
+
+
+  async function validateWithTwitter(){
+    console.log('todo');
+
+  }
+  window.validateWithTwitter = validateWithTwitter;
+
+
+
+
+
+
+
+ async function validateWithDiscord(){
+   window.location.href = 'https://discord.com/oauth2/authorize?client_id=1252218334699585536&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify';
+
+}
+window.validateWithDiscord = validateWithDiscord;
+
+
+
+
+
