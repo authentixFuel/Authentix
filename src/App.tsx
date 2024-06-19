@@ -2,21 +2,56 @@ import React from 'react';
 import logo from './home.png';
 import './App.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createCaptcha } from "freecaptcha";
 import axios from "axios";
 import { Wallet } from 'fuels';
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
 import { createGuildClient, createSigner } from "@guildxyz/sdk";
-import { Client } from "discord.js";
 
 
 function App() {
-  const [addr, setAddr] = useState<string | ''>();
+  const [addr, setAddr] = useState('');
   const [hexAddr, setHexAddr] = useState('');
-  const [capKey, setCapKey] = useState<string | ''>();
+  const [capKey, setCapKey] = useState('');
   const [lastGen, setLastGen] = useState('');
-  const [codeVal, setCodeVal] = useState('');
+  const [accessVal, setAccessVal] = useState('');
+
+  useEffect(() => {
+    async function checkDiscord() {
+      var url = window.location.toString();
+      var queryString = "";
+      var access_token = "";
+      if (url.length > 25){
+        queryString = url.substring(url.indexOf('#') + 1);
+        access_token = queryString.substring(31,61);
+        setAccessVal(access_token);
+      }
+      console.log("access token: ".concat(access_token));
+      console.log(access_token);
+      if (access_token.length > 2){
+        const url2 = 'https://discord.com/api/v10/oauth2/@me';
+        const response = await fetch(url2, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data.user.id);
+          console.log(data.user.username);
+
+        } else {
+          throw new Error(`Error fetching user data: [${response.status}] ${response.statusText}`);
+        }
+      }
+    }
+
+    checkDiscord()
+  }, [])
+
+
+
 
 
   
@@ -60,11 +95,45 @@ function App() {
   }
 
   const CaptchaAuth = async () => {
-    console.log('hii');
+    const now = Date.now();
+    var gen_time = lastGen;
+    var el = document.getElementById("captchaTextBox")! as HTMLInputElement;
+    var input_val = el.value;
+
+    if (gen_time == ''){
+      console.log('no captcha generated');
+      GenerateCaptcha();
+      el.value = '';
+      return;
+    }
+
+    const last_gen = Number(gen_time);
+    console.log(now - last_gen);
+    if (now - last_gen > 30000){
+      console.log('timed out captcha');
+      document.getElementById('cap_resp')!.textContent = 'Timed Out!';
+      GenerateCaptcha();
+      el.value = '';
+    }
+    var captcha_val = capKey;
+
+    console.log(captcha_val);
+    console.log(input_val);
+    if (input_val == captcha_val){
+      console.log('true');
+      document.getElementById('cap_resp')!.textContent = 'Success!';
+      document.getElementById('cap_area')!.innerHTML = '';
+    }
+    else {
+      console.log('false');
+      document.getElementById('cap_resp')!.textContent = 'Captcha Mismatch!';
+      GenerateCaptcha();
+      el.value = '';
+    }
   }
 
   const DiscordAuth = async () => {
-    console.log(lastGen);
+    window.location.href = 'https://discord.com/oauth2/authorize?client_id=1252218334699585536&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify';
   }
 
   const GuildAuth = async () => {
@@ -155,9 +224,9 @@ function App() {
           <div id="mouse_area"></div>
           <a>--------------------------------------------</a>
           <a onClick={GenerateCaptcha} style={{"cursor":'pointer'}}> Captcha Based Verification </a>
-           <div id="cap_area">
-        <div>Fill in the Order: White - Blue - Red</div>
-        <div>Ignore All Other Colors</div>
+          <div id="cap_area">
+            <div>Fill in the Order: White - Blue - Red</div>
+            <div>Ignore All Other Colors</div>
 
 
 
@@ -170,8 +239,9 @@ function App() {
               <input type="text" placeholder="Captcha" id="captchaTextBox" height="120"/>
               <button type="button"  onClick={CaptchaAuth}>Submit</button>
             </form>
-      </div>
-      <a>--------------------------------------------</a>
+          </div>
+          <div id="cap_resp" style={{"fontSize": ".6em"}}></div>
+          <a>--------------------------------------------</a>
           <a onClick={DiscordAuth} style={{"cursor":'pointer'}}> Discord Verification </a>
           <a>--------------------------------------------</a>
 
