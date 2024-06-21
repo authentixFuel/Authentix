@@ -8,6 +8,7 @@ import axios from "axios";
 import { Wallet } from 'fuels';
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
 import { createGuildClient, createSigner } from "@guildxyz/sdk";
+import { Octokit } from 'octokit';
 
 
 function App() {
@@ -16,19 +17,23 @@ function App() {
   const [capKey, setCapKey] = useState('');
   const [lastGen, setLastGen] = useState('');
   const [accessVal, setAccessVal] = useState('');
+  const [codeVal, setCodeVal] = useState('');
 
   useEffect(() => {
     async function checkDiscord() {
       var url = window.location.toString();
       var queryString = "";
       var access_token = "";
-      if (url.length > 25){
+      if (url.length > 25 && url.indexOf('#') != -1){
         queryString = url.substring(url.indexOf('#') + 1);
         access_token = queryString.substring(31,61);
         setAccessVal(access_token);
       }
+      else {
+        console.log('not a discord check flow');
+        return;
+      }
       console.log("access token: ".concat(access_token));
-      console.log(access_token);
       if (access_token.length > 2){
         const url2 = 'https://discord.com/api/v10/oauth2/@me';
         const response = await fetch(url2, {
@@ -45,9 +50,50 @@ function App() {
           throw new Error(`Error fetching user data: [${response.status}] ${response.statusText}`);
         }
       }
+
+
+    }
+    async function checkGithub() {
+      var url = window.location.toString();
+
+      var code = "";
+      if (url.length > 40 && url.indexOf('code') != -1){
+        code = url.substring(url.indexOf('code') + 5);
+        setCodeVal(code);
+        console.log("github code: ".concat(code));
+
+      }
+      else {
+        console.log('not a github check flow');
+        return;
+      }
+      if (code.length > 2){
+        try{
+          const data = {
+            code: code,
+          }
+          console.log(data);
+          const response = await axios.post("https://gm-serve3.onrender.com/api/authentix/github", {
+            data: data,
+        });
+        console.log(response.data);
+        var toke = response.data.token;
+        const octokit = new Octokit({ auth: toke });
+        const usr = await octokit.request("GET /user");
+        console.log(usr);
+
+
+        }
+        catch (err){
+          console.log(err);
+        }
+      }
+      console.log('Successful Fetch');
+
     }
 
-    checkDiscord()
+    checkDiscord();
+    checkGithub();
   }, [])
 
 
@@ -130,6 +176,10 @@ function App() {
       GenerateCaptcha();
       el.value = '';
     }
+  }
+
+  const GithubAuth = async () => {
+    window.location.href = 'https://github.com/login/oauth/authorize?client_id=Ov23liA4WFBMaBVe56Gq&redirect_uri=https://authentix-fuel.netlify.app/&scope=read:user';
   }
 
   const DiscordAuth = async () => {
@@ -243,6 +293,8 @@ function App() {
           <div id="cap_resp" style={{"fontSize": ".6em"}}></div>
           <a>--------------------------------------------</a>
           <a onClick={DiscordAuth} style={{"cursor":'pointer'}}> Discord Verification </a>
+          <a>--------------------------------------------</a>
+          <a onClick={GithubAuth} style={{"cursor":'pointer'}}> GitHub Verification </a>
           <a>--------------------------------------------</a>
 
           <a onClick={GuildAuth} style={{"cursor":'pointer'}}> Guild XYZ Verification </a>
