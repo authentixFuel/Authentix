@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from './home.png';
 import './App.css';
-
 import { useState, useEffect } from 'react';
 import { createCaptcha } from "freecaptcha";
 import axios from "axios";
@@ -9,6 +8,7 @@ import { Wallet } from 'fuels';
 import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/sdk';
 import { createGuildClient, createSigner } from "@guildxyz/sdk";
 import { Octokit } from 'octokit';
+import { TwitterApi } from 'twitter-api-v2';
 
 
 function App() {
@@ -18,6 +18,9 @@ function App() {
   const [lastGen, setLastGen] = useState('');
   const [accessVal, setAccessVal] = useState('');
   const [codeVal, setCodeVal] = useState('');
+  const [tTokenVal, setTTokenVal] = useState('');
+  const [tSecretVal, setTSecretVal] = useState('');
+  const [tCodeVal, setTCodeVal] = useState('');
 
   useEffect(() => {
     async function checkDiscord() {
@@ -182,6 +185,51 @@ function App() {
     window.location.href = 'https://github.com/login/oauth/authorize?client_id=Ov23liA4WFBMaBVe56Gq&redirect_uri=https://authentix-fuel.netlify.app/&scope=read:user';
   }
 
+
+
+  const TwitterAuth = async () => {
+    try{
+
+          const response = await axios.post("https://gm-serve3.onrender.com/api/authentix/twitter", {
+            data: null,
+        });
+        console.log(response.data);
+        setTTokenVal(response.data.token);
+        setTSecretVal(response.data.secret);
+
+
+
+        }
+        catch (err){
+          console.log(err);
+        }
+
+  }
+
+  const TwitterComp = async () => {
+    const t = tTokenVal;
+    const s = tSecretVal;
+    const c = tCodeVal;
+    try{
+          const data = {
+            code: c,
+            token: t,
+            secret: s,
+          }
+          const response = await axios.post("https://gm-serve3.onrender.com/api/authentix/twitter2", {
+            data: data,
+        });
+        console.log(response.data.tauth.userId);
+
+
+
+        }
+        catch (err){
+          console.log(err);
+        }
+
+  }
+
   const DiscordAuth = async () => {
     window.location.href = 'https://discord.com/oauth2/authorize?client_id=1252218334699585536&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify';
   }
@@ -296,6 +344,16 @@ function App() {
           <a>--------------------------------------------</a>
           <a onClick={GithubAuth} style={{"cursor":'pointer'}}> GitHub Verification </a>
           <a>--------------------------------------------</a>
+
+          <a onClick={TwitterAuth} style={{"cursor":'pointer'}}> Twitter Verification Start </a>
+          <a>--------------------------------------------</a>
+          <a onClick={TwitterComp} style={{"cursor":'pointer'}}> Twitter Verification End </a>
+          <label>
+            Your Twitter Confirmation Code:
+            <input value = {tCodeVal} onChange = {e => setTCodeVal(e.target.value)} />
+          </label>
+          <a>--------------------------------------------</a>
+
 
           <a onClick={GuildAuth} style={{"cursor":'pointer'}}> Guild XYZ Verification </a>
         </header>
