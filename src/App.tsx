@@ -323,7 +323,7 @@ function App() {
           <a>--------------------------------------------</a>
           <a onClick={GenerateCaptcha} style={{"cursor":'pointer'}}> Captcha Based Verification </a>
           <div id="cap_area">
-            <div>Fill in the Order: White - Blue - Red</div>
+            <div>Fill in the Order: White - Navy Blue - Red</div>
             <div>Ignore All Other Colors</div>
 
 
@@ -349,13 +349,14 @@ function App() {
           <a>--------------------------------------------</a>
           <a onClick={TwitterComp} style={{"cursor":'pointer'}}> Twitter Verification End </a>
           <label>
-            Your Twitter Confirmation Code:
+            Your Twitter Confirmation Code::
             <input value = {tCodeVal} onChange = {e => setTCodeVal(e.target.value)} />
           </label>
           <a>--------------------------------------------</a>
 
 
           <a onClick={GuildAuth} style={{"cursor":'pointer'}}> Guild XYZ Verification </a>
+          <a>--------------------------------------------</a>
         </header>
     </div>
   );
