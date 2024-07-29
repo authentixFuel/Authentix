@@ -9,6 +9,7 @@
         "eject": "react-scripts eject"
     },
     "dependencies": {
+        "@envio-dev/hyperfuel-client": "^1.2.2",
         "@fuel-ts/address": "^0.81.0",
         "@fuel-wallet/sdk": "^0.16.1",
         "@guildxyz/sdk": "^2.5.0",

@@ -9,6 +9,7 @@ import { Fuel, FuelWalletConnector, FueletWalletConnector } from '@fuel-wallet/s
 import { createGuildClient, createSigner } from "@guildxyz/sdk";
 import { Octokit } from 'octokit';
 import { TwitterApi } from 'twitter-api-v2';
+import { HyperfuelClient, Query } from "@envio-dev/hyperfuel-client";
 
 
 function App() {
@@ -234,6 +235,42 @@ function App() {
     window.location.href = 'https://discord.com/oauth2/authorize?client_id=1252218334699585536&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&scope=identify';
   }
 
+  const QuestAuth = async () => {
+    /*const client = HyperfuelClient.new({
+    url: "https://fuel-testnet.hypersync.xyz",
+  });
+    const query= {
+    // start query from block 0
+    fromBlock: 0,
+    // if to_block is not set, query runs to the end of the chain
+
+    inputs: [
+      {
+        assetId: [
+          "0x2a0d0ed9d2217ec7f32dcd9a1902ce2a66d68437aeff84e3a3cc8bebee0d2eea",
+        ],
+      },
+    ],
+    // fields we want returned from loaded inputs
+    fieldSelection: {
+      input: [
+        "tx_id",
+        "block_height",
+        "input_type",
+        "utxo_id",
+        "owner",
+        "amount",
+        "asset_id",
+      ],
+    },
+  };
+
+  const res = await client.getSelectedData(query);
+
+  console.log(`inputs: ${JSON.stringify(res.data.inputs)}`);*/
+    console.log('under maintenance');
+  }
+
   const GuildAuth = async () => {
     const gid = '30930';
     const wallet = hexAddr || '';
@@ -356,6 +393,8 @@ function App() {
 
 
           <a onClick={GuildAuth} style={{"cursor":'pointer'}}> Guild XYZ Verification </a>
+          <a>--------------------------------------------</a>
+          <a onClick={QuestAuth} style={{"cursor":'pointer'}}> Onchain Verification </a>
           <a>--------------------------------------------</a>
         </header>
     </div>

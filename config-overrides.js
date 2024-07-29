@@ -8,6 +8,7 @@ module.exports = function override(config) {
     https: require.resolve("https-browserify"),
 	stream: require.resolve("stream-browserify"),
 	url: require.resolve("url"),
+    path: false,
 	fs: false,
 	zlib: false,
   });
